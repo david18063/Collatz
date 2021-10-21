@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Numerics;
+
+namespace CollatzConjecture
+{
+    class Program
+    {
+        static bool IsPowerOfTwo(BigInteger N)
+        {
+            return (N & (N - 1)) == 0;
+        }
+
+        static bool Collatz_Fast(string s)
+        {
+            // 2^68 = 295 147 905 179 352 825 856
+
+            string two_to_the_sixty_eight = "295 147 905 179 352 825 856";
+
+            two_to_the_sixty_eight = two_to_the_sixty_eight.Replace(" ", "");
+
+            s = s.Replace(" ", "");
+
+            BigInteger i = BigInteger.Parse(s);
+
+            int steps = 0;
+
+            Console.WriteLine(i);
+
+            while (i > BigInteger.Parse(two_to_the_sixty_eight) && !IsPowerOfTwo(i))
+            {
+                if (i % 2 == 1) i = (3 * i + 1)/2;
+                else i /= 2;
+
+                Console.WriteLine(i);
+                steps++;
+            }
+
+            Console.WriteLine("Number of steps: " + steps);
+
+            return true;
+        }
+
+        // How many steps until it reaches 1
+        static void Collatz(string s)
+        {
+            s = s.Replace(" ", "");
+
+            BigInteger i = BigInteger.Parse(s);
+
+            int steps = 0;
+
+            Console.WriteLine(i);
+
+            while (i != 1)
+            {
+                if (i % 2 == 1) i = 3 * i + 1;
+                else i /= 2;
+
+                Console.WriteLine(i);
+                steps++;
+            }
+
+            Console.WriteLine("Number of steps: " + steps);
+        }
+        static void Main(string[] args)
+        {
+            string s = "295 147 905 179 352 825 856";
+
+            // Verify numbers beyond 2^68
+
+            s = s.Replace(" ", "");
+
+            BigInteger N = BigInteger.Parse(s);
+
+            while(Collatz_Fast(N.ToString())) N++;
+
+            Console.ReadKey();
+        }
+    }
+}
